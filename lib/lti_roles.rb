@@ -8,22 +8,37 @@ module LTIRoles
   ContextRoleURN = 'urn:lti:role:ims/lis/'.freeze
 
   class RoleManager
-    attr_accessor :roles, :context_types, :system_roles, :institution_roles, :context_roles
+    attr_accessor :roles, :context_types, :system_roles, :institution_roles, :context_roles, :other_roles
 
     def initialize(roles = '')
       @roles = roles
-      @context_types = map_roles(ContextTypeURN)
-      @system_roles = map_roles(SystemRoleURN)
-      @institution_roles = map_roles(InstitutionRoleURN)
-      @context_roles = map_roles(ContextRoleURN)
+      @context_types = []#map_roles(ContextTypeURN)
+      @system_roles = []#map_roles(SystemRoleURN)
+      @institution_roles = []#map_roles(InstitutionRoleURN)
+      @context_roles = []#map_roles(ContextRoleURN)
+      @other_roles = []
+      map_roles
     end
 
-    def map_roles(urn_prefix)
-      roles.split(',').map do |role|
-        role = role.downcase
-        next unless role.include?(urn_prefix)
-        role.gsub(urn_prefix, '').gsub('/', '').underscore
-      end.compact
+    def map_roles
+      roles.split(',').each do |role|
+        case
+        when role.downcase.include?(ContextTypeURN)
+          context_types << clean_role(ContextTypeURN, role)
+        when role.downcase.include?(SystemRoleURN)
+          system_roles << clean_role(SystemRoleURN, role)
+        when role.downcase.include?(InstitutionRoleURN)
+          institution_roles << clean_role(InstitutionRoleURN, role)
+        when role.downcase.include?(ContextRoleURN)
+          context_roles << clean_role(ContextRoleURN, role)
+        else
+          other_roles << role
+        end
+      end
+    end
+
+    def clean_role(urn_prefix, role)
+      role.gsub(urn_prefix, '').gsub('/', '').underscore
     end
 
     def to_h

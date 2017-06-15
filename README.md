@@ -27,7 +27,10 @@ Example:
   roles = LTIRoles::RoleManager.new('urn:lti:instrole:ims/lis/Instructor,urn:lti:instrole:ims/lis/Student,urn:lti:role:ims/lis/Instructor,urn:lti:sysrole:ims/lis/User')
 
   roles.institution_roles
-  => [:instructor, :student]
+  => ['instructor', 'student']
+
+  roles.context_roles
+  => ['instructor']
 ```
 
 ## Usage with CanCanCan

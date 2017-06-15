@@ -11,6 +11,13 @@ RSpec.describe LTIRoles do
     role_manager.new(urn).send(role_type).include?(result)
   end
 
+  describe 'Unidentified roles' do
+    let(:role_type) { :other_roles }
+    it 'maps to other' do
+      expect(has_role?("someRandomRole", 'someRandomRole')).to eq true
+    end
+  end
+
   context 'Context Type' do
     let(:role_type) { :context_types }
 
