@@ -20,6 +20,7 @@ module LTIRoles
 
     def map_roles(urn_prefix)
       roles.split(',').map do |role|
+        role = role.downcase
         next unless role.include?(urn_prefix)
         role.gsub(urn_prefix, '').gsub('/', '').underscore
       end.compact
