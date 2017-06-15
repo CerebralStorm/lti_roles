@@ -47,7 +47,7 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
-    user.roles ||= []
+    user.roles ||= LTIRoles::RoleManager.new
 
     if user.roles.institution_roles.include?(:administrator)
       can :manage, :all

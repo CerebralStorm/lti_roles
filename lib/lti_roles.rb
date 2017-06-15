@@ -10,7 +10,7 @@ module LTIRoles
   class RoleManager
     attr_accessor :roles, :context_types, :system_roles, :institution_roles, :context_roles
 
-    def initialize(roles)
+    def initialize(roles = '')
       @roles = roles
       @context_types = map_roles(ContextTypeURN)
       @system_roles = map_roles(SystemRoleURN)
