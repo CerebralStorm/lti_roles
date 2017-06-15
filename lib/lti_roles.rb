@@ -21,16 +21,17 @@ module LTIRoles
     def map_roles(urn_prefix)
       roles.split(',').map do |role|
         next unless role.include?(urn_prefix)
-        role.gsub(urn_prefix, '').gsub('/', '').underscore.to_sym
+        role.gsub(urn_prefix, '').gsub('/', '').underscore
       end.compact
     end
 
     def to_h
       {
-        context_type: context_types,
-        system_roles: system_roles,
-        institution_roles: institution_roles,
-        context_roles: context_roles
+        'roles' => roles,
+        'context_type' => context_types,
+        'system_roles' => system_roles,
+        'institution_roles' => institution_roles,
+        'context_roles' => context_roles
       }
     end
 
