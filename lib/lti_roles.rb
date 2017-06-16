@@ -12,10 +12,10 @@ module LTIRoles
 
     def initialize(roles = '')
       @roles = roles
-      @context_types = []#map_roles(ContextTypeURN)
-      @system_roles = []#map_roles(SystemRoleURN)
-      @institution_roles = []#map_roles(InstitutionRoleURN)
-      @context_roles = []#map_roles(ContextRoleURN)
+      @context_types = []
+      @system_roles = []
+      @institution_roles = []
+      @context_roles = []
       @other_roles = []
       map_roles
     end
@@ -38,7 +38,7 @@ module LTIRoles
     end
 
     def clean_role(urn_prefix, role)
-      role.gsub(urn_prefix, '').gsub('/', '').underscore
+      role.gsub(/#{Regexp.quote(urn_prefix)}/i, '').gsub('/', '').underscore
     end
 
     def to_h
